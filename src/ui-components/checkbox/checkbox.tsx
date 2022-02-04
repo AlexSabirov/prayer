@@ -1,5 +1,5 @@
-import { Switch } from 'react-native';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-export function Chexbox(): JSX.Element {
-  return <Switch />;
+export function CheckBox(): JSX.Element {
+  return <BouncyCheckbox onPress={(isChecked) => !isChecked} />;
 }

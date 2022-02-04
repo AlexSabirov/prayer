@@ -1,15 +1,22 @@
-import { SafeAreaView } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ThemeProvider } from 'styled-components';
 
-import { Desk } from './src/components/desk';
 import { theme } from './src/styles/theme';
+import { Auth } from './src/views/auth';
+import { Board } from './src/views/board';
 
-export const App = function (): JSX.Element {
+const Stack = createNativeStackNavigator();
+
+export function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <SafeAreaView>
-        <Desk />
-      </SafeAreaView>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Auth">
+          <Stack.Screen name="Auth" component={Auth} />
+          <Stack.Screen name="Board" component={Board} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </ThemeProvider>
   );
-};
+}

@@ -1,11 +1,14 @@
 import styled from 'styled-components/native';
 
-export function Input(): JSX.Element {
-  return <InputWrapper placeholder="Add a prayer..." />;
+interface InputProps {
+  placeholder: string;
+}
+
+export function Input(props: InputProps): JSX.Element {
+  return <InputWrapper {...props} />;
 }
 
 const InputWrapper = styled.TextInput`
-  background: #ffffff;
   border: ${(props) => props.theme.colors.border};
   border-radius: 10px;
   padding: 15px 15px 15px 52px;
