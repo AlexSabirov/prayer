@@ -1,20 +1,25 @@
-import { Text, TouchableOpacity } from 'react-native';
-// import styled from 'styled-components/native';
+import styled from 'styled-components/native';
 
 interface Props {
   title: string;
+  color: string;
 }
 export function AddButton(props: Props): JSX.Element {
   return (
-    <TouchableOpacity>
-      <Text>{props.title}</Text>
-    </TouchableOpacity>
+    <ButtonsWrapper>
+      <ButtonWrapper title={props.title} color={props.color} />
+    </ButtonsWrapper>
   );
 }
 
-// const ButtonWrapper = styled(TouchableOpacity)`
-//   background-color: '#BFB393';
-//   width: '30%';
-//   align-self: 'center';
-//   align-items: 'center';
-// `;
+const ButtonWrapper = styled.Button`
+  align-self: center;
+  align-items: center;
+`;
+
+const ButtonsWrapper = styled.View`
+  overflow: hidden;
+  border-radius: 15px;
+  width: 60%;
+  align-self: center;
+`;

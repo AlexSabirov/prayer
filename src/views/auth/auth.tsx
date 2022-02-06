@@ -9,7 +9,7 @@ export function Auth(): JSX.Element {
       <TextWrapper>Введите имя пользователя и пароль:</TextWrapper>
       <Input placeholder="Имя пользователя: " />
       <Input placeholder="Пароль: " />
-      <AddButton title="Принять" />
+      <AddButton title="Принять" color="#bfb393" />
     </AuthWrapper>
   );
 }
@@ -20,4 +20,5 @@ const AuthWrapper = styled.View`
 
 const TextWrapper = styled.Text`
   font-size: ${(props) => props.theme.fontSize.text};
+  margin-bottom: 10px;
 `;

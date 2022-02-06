@@ -10,6 +10,7 @@ export function Input(props: InputProps): JSX.Element {
 
 const InputWrapper = styled.TextInput`
   border: ${(props) => props.theme.colors.border};
+  background-color: #ffffff;
   border-radius: 10px;
   padding: 15px 15px 15px 52px;
   font-family: SF UI Text;
