@@ -1,13 +1,10 @@
+import { ButtonProps } from 'react-native';
 import styled from 'styled-components/native';
 
-interface Props {
-  title: string;
-  color: string;
-}
-export function AddButton(props: Props): JSX.Element {
+export function AddButton(props: ButtonProps): JSX.Element {
   return (
     <ButtonsWrapper>
-      <ButtonWrapper title={props.title} color={props.color} />
+      <ButtonWrapper {...props} />
     </ButtonsWrapper>
   );
 }

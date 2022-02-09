@@ -1,10 +1,6 @@
 import styled from 'styled-components/native';
 
-interface InputProps {
-  placeholder: string;
-}
-
-export function Input(props: InputProps): JSX.Element {
+export function Input(props): JSX.Element {
   return <InputWrapper {...props} />;
 }
 
