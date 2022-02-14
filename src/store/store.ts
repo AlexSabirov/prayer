@@ -3,12 +3,13 @@ import { combineReducers, configureStore, createStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 
 import authSlice from './ducks/auth/slice';
+import boardSlice from './ducks/board/slice';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
 };
-const rootReducer = combineReducers({ authSlice });
+const rootReducer = combineReducers({ authSlice, boardSlice });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

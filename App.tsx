@@ -17,7 +17,7 @@ export function App(): JSX.Element {
       <PersistGate loading={null} persistor={persistor}>
         <Provider store={store}>
           <NavigationContainer>
-            <Stack.Navigator initialRouteName="Auth">
+            <Stack.Navigator initialRouteName="Board">
               <Stack.Screen name="Auth" component={Auth} />
               <Stack.Screen name="Board" component={Board} />
             </Stack.Navigator>

@@ -9,9 +9,12 @@ export const instance = axios.create({
 // instance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
 export const signIn = (data: Login) => {
-  return instance({
-    url: '/auth/sign-in',
-    method: 'POST',
-    data,
-  });
+  return instance
+    .post('auth/sign-in', { data })
+    .then((response) => {
+      response;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };

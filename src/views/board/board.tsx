@@ -1,11 +1,11 @@
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Desk } from '../../components/desk';
+import { BoardItem } from '../../components/board-item';
 
 export function Board(): JSX.Element {
   return (
-    <View>
-      <Desk />
-    </View>
+    <SafeAreaView>
+      <BoardItem />
+    </SafeAreaView>
   );
 }
