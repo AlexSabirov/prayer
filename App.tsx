@@ -14,16 +14,16 @@ const Stack = createNativeStackNavigator();
 export function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Provider store={store}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer>
-            <Stack.Navigator initialRouteName="Board">
+            <Stack.Navigator initialRouteName="Auth">
               <Stack.Screen name="Auth" component={Auth} />
               <Stack.Screen name="Board" component={Board} />
             </Stack.Navigator>
           </NavigationContainer>
-        </Provider>
-      </PersistGate>
+        </PersistGate>
+      </Provider>
     </ThemeProvider>
   );
 }

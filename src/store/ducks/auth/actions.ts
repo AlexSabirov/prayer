@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const SignIn = createAction('SIGN_IN');
-export const SignInAction = createAction('AUTH/SIGN_IN');
+import { LoginBody } from '../../../api/axios/type';
+
+export const SignInAction = createAction<LoginBody>('AUTH/SIGN_IN');

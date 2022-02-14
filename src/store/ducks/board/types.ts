@@ -1,23 +1,22 @@
 export interface Board {
-  isAuthorized: boolean;
-  token: string;
   columns: Record<string, Column>;
 }
 
 export interface Column {
-  id: string;
+  id: number;
   title: string;
-  prayers: Record<string, Prayer>;
+  discriptions: string | null;
+  userId: number;
 }
 
 export interface Prayer {
-  id: string;
+  id: number;
   title: string;
   checked: boolean;
   comments: Record<string, Comment>;
 }
 
 export interface Comment {
-  id: string;
+  id: number;
   title: string;
 }

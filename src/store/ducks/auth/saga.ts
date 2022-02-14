@@ -1,23 +1,19 @@
 import { call, put, takeLatest } from '@redux-saga/core/effects';
 
 import { signIn } from '../../../api/axios/axios';
-import { Login } from '../../../api/axios/type';
-import { SignIn, SignInAction } from './actions';
+import { SignInAction } from './actions';
+import { authActions } from './slice';
 
-export function* SignInWorker(action: { payload: Login }) {
+export function* SignInWorker(action) {
   try {
     const data = yield call(signIn, action.payload);
-    yield put({
-      type: SignIn,
-      payload: {
-        data: data,
-      },
-    });
+    yield put(authActions.signIn(data));
+    yield call([console, 'log'], data);
   } catch (e) {
     yield console.log(e);
   }
 }
 
 export function* watchAuth() {
-  yield takeLatest(SignInAction, SignInWorker);
+  yield takeLatest(SignInAction.type, SignInWorker);
 }
