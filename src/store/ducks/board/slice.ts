@@ -1,23 +1,34 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { normalize, schema } from 'normalizr';
 
 import { initialState } from './state';
 import { Column } from './types';
+
+interface Normalize {
+  entities: {
+    columns: Record<string, Column>;
+  };
+}
 
 export const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
     getColumns(state, action) {
-      state.columns = action.payload;
+      const columnSchema = new schema.Entity('columns');
+      const columnListSchema = new schema.Array(columnSchema);
+      const normalizedData: Normalize = normalize(action.payload, columnListSchema);
+      console.log(`NData:`, normalizedData.entities);
+      state.columns = normalizedData.entities.columns;
     },
     addColumn(state, action: PayloadAction<Column>) {
       const { id, ...rest } = action.payload;
       state.columns[id] = { id, ...rest };
     },
-    // updateColumn(state, action) {
-    //   const { columnId, title } = action.payload;
-    //   state.columns[columnId].title = title;
-    // },
+    updateColumn(state, action: PayloadAction<Column>) {
+      const { id, ...rest } = action.payload;
+      state.columns[id] = { id, ...rest };
+    },
     // removeColumn(state, action) {
     //   const { columnId } = action.payload;
     //   delete state.columns[columnId];

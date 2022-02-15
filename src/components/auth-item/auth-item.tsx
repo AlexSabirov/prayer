@@ -1,48 +1,56 @@
-import { useState } from 'react';
+import { useCallback } from 'react';
+import { Field, Form } from 'react-final-form';
 import styled from 'styled-components';
 
 import { useAppDispatch } from '../../hooks/redux';
 import { SignInAction } from '../../store/ducks/auth/actions';
-import { AddColumnsAction, GetColumnsAction } from '../../store/ducks/board/actions';
+import { GetColumnsAction } from '../../store/ducks/board/actions';
 import { AddButton } from '../../ui-components/add-button';
 import { Input } from '../../ui-components/input';
 
+interface LoginField {
+  email: string;
+  password: string;
+}
+
 export function AuthItem(): JSX.Element {
-  const [email, setEmail] = useState('alexsabirov@gmail.com');
-  const [password, setPassword] = useState('0000');
-
-  const [title, setTitle] = useState('fdfs');
-  const [description, setDescription] = useState('fdsfds');
-
   const dispatch = useAppDispatch();
 
-  const login = () => {
-    dispatch(SignInAction({ email, password }));
-  };
+  const login = useCallback(
+    (values: LoginField) => {
+      console.log(`VALUES: `, values);
+      dispatch(SignInAction(values));
+    },
+    [dispatch, SignInAction],
+  );
+
+  const submit = (values) => login(values);
 
   const getColumns = () => {
     dispatch(GetColumnsAction());
   };
 
-  const addColumn = () => {
-    dispatch(AddColumnsAction({ title, description }));
-  };
-
   return (
     <AuthWrapper>
       <TextWrapper>Введите имя пользователя и пароль:</TextWrapper>
-      <Input placeholder="Имя пользователя: " value={email} onChangeText={setEmail} />
-      <Input
-        placeholder="Пароль: "
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry={true}
+      <Form
+        onSubmit={submit}
+        render={() => (
+          <>
+            <Field
+              name="email"
+              render={(props) => <Input {...props} placeholder="Имя пользователя: " />}
+            />
+            <Field
+              name="password"
+              render={(props) => <Input {...props} placeholder="Пароль " />}
+            />
+            <AddButton onPress={submit} title="Принять" color="#bfb393" />
+          </>
+        )}
       />
-      <AddButton onPress={login} title="Принять" color="#bfb393" />
+
       <AddButton onPress={getColumns} title="Columns" color="#bfb393" />
-      <Input placeholder="Имя колонки: " value={title} onChangeText={setTitle} />
-      <Input placeholder="Описание: " value={description} onChangeText={setDescription} />
-      <AddButton onPress={addColumn} title="addColumn" color="#bfb393" />
     </AuthWrapper>
   );
 }

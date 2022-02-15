@@ -1,12 +1,16 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import { fork } from '@redux-saga/core/effects';
+import { all } from '@redux-saga/core/effects';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 
-import { watchAuth } from './ducks/auth/saga';
+import { authWatcher } from './ducks/auth/saga';
 import authSlice from './ducks/auth/slice';
-import { addColumnWatcher, getColumnsWatcher } from './ducks/board/saga';
+import {
+  addColumnWatcher,
+  getColumnsWatcher,
+  updateColumnWatcher,
+} from './ducks/board/saga';
 import boardSlice from './ducks/board/slice';
 
 const persistConfig = {
@@ -25,17 +29,18 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });
 
-const storeFunc = () => store;
-
 function* rootSaga() {
-  yield fork(watchAuth);
-  yield fork(getColumnsWatcher);
-  yield fork(addColumnWatcher);
+  yield all([
+    authWatcher(),
+    getColumnsWatcher(),
+    addColumnWatcher(),
+    updateColumnWatcher(),
+  ]);
 }
+
 sagaMiddleware.run(rootSaga);
 
 export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof storeFunc>;
-export type AppDispatch = AppStore['dispatch'];
+export type AppDispatch = typeof store.dispatch;

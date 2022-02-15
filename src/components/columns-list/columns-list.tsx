@@ -18,4 +18,5 @@ export function ColumnList(): JSX.Element {
 
 const ListWrapper = styled.View`
   padding: 15px;
+  background-color: ${(props) => props.theme.colors.background};
 `;
