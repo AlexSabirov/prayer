@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { LoginBody } from '../../api/axios/type';
 import { useAppDispatch } from '../../hooks/redux';
 import { SignInAction } from '../../store/ducks/auth/actions';
-import { GetColumnsAction } from '../../store/ducks/board/actions';
+import { GetColumnsAction, GetPrayersAction } from '../../store/ducks/board/actions';
 import { AddButton } from '../../ui-components/add-button';
 import { Input } from '../../ui-components/input';
 
@@ -15,6 +15,10 @@ export function AuthItem(): JSX.Element {
 
   const getColumns = () => {
     dispatch(GetColumnsAction());
+  };
+
+  const getPrayers = () => {
+    dispatch(GetPrayersAction());
   };
 
   const initialValues: LoginBody = {
@@ -29,11 +33,17 @@ export function AuthItem(): JSX.Element {
     [dispatch, SignInAction],
   );
 
+  const submit = (values) => {
+    login(values);
+    getColumns();
+    getPrayers();
+  };
+
   return (
     <AuthWrapper>
       <TextWrapper>Введите имя пользователя и пароль:</TextWrapper>
       <Form
-        onSubmit={login}
+        onSubmit={submit}
         initialValues={initialValues}
         render={({ handleSubmit }) => {
           return (
@@ -53,7 +63,6 @@ export function AuthItem(): JSX.Element {
           );
         }}
       />
-      <AddButton onPress={getColumns} title="Columns" color="#bfb393" />
     </AuthWrapper>
   );
 }

@@ -9,6 +9,7 @@ import authSlice from './ducks/auth/slice';
 import {
   addColumnWatcher,
   getColumnsWatcher,
+  getPrayersWatcher,
   removeColumnWatcher,
   updateColumnWatcher,
 } from './ducks/board/saga';
@@ -37,6 +38,7 @@ function* rootSaga() {
     addColumnWatcher(),
     removeColumnWatcher(),
     updateColumnWatcher(),
+    getPrayersWatcher(),
   ]);
 }
 

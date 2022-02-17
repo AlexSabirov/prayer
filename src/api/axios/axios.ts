@@ -77,3 +77,12 @@ export const removeColumn = (data: RemoveColumnBody) => {
       console.log(error);
     });
 };
+
+export const getPrayers = () => {
+  return instanceToken
+    .get('/prayers')
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+    });
+};

@@ -3,11 +3,16 @@ import { normalize, schema } from 'normalizr';
 
 import { RemoveColumnBody } from '../../../api/axios/type';
 import { initialState } from './state';
-import { Column } from './types';
+import { Column, Prayer } from './types';
 
-interface Normalize {
+interface NormalizeColumn {
   entities: {
     columns: Record<string, Column>;
+  };
+}
+interface NormalizePrayer {
+  entities: {
+    prayers: Record<string, Prayer>;
   };
 }
 
@@ -18,7 +23,7 @@ export const boardSlice = createSlice({
     getColumns(state, action) {
       const columnSchema = new schema.Entity('columns');
       const columnListSchema = new schema.Array(columnSchema);
-      const normalizedData: Normalize = normalize(action.payload, columnListSchema);
+      const normalizedData: NormalizeColumn = normalize(action.payload, columnListSchema);
       state.columns = normalizedData.entities.columns;
     },
     addColumn(state, action: PayloadAction<Column>) {
@@ -32,6 +37,12 @@ export const boardSlice = createSlice({
     removeColumn(state, action: PayloadAction<RemoveColumnBody>) {
       const { id } = action.payload;
       delete state.columns[id];
+    },
+    getPrayers(state, action) {
+      const prayerSchema = new schema.Entity('prayers', {}, { idAttribute: 'columnId' });
+      const prayerListSchema = new schema.Array(prayerSchema);
+      const normalizedData: NormalizePrayer = normalize(action.payload, prayerListSchema);
+      state.prayers = normalizedData.entities.prayers;
     },
     // addPrayer(state, action) {
     //   const { columnId, title } = action.payload;

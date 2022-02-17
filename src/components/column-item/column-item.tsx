@@ -8,6 +8,7 @@ import { RemoveColumnAction, UpdateColumnAction } from '../../store/ducks/board/
 import { Column } from '../../store/ducks/board/types';
 import { AddButton } from '../../ui-components/add-button';
 import { Input } from '../../ui-components/input';
+import { PrayersList } from '../prayers-list';
 
 interface ColumnItemProps {
   column: Column;
@@ -75,6 +76,7 @@ export function ColumnItem({ column }: ColumnItemProps): JSX.Element {
           />
         </>
       )}
+      <PrayersList />
     </ItemWrapper>
   );
 }

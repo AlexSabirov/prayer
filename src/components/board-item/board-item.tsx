@@ -8,6 +8,7 @@ import { AddColumnsAction } from '../../store/ducks/board/actions';
 import { AddButton } from '../../ui-components/add-button';
 import { Input } from '../../ui-components/input';
 import { ColumnList } from '../columns-list/columns-list';
+import { PrayersList } from '../prayers-list';
 
 export function BoardItem(): JSX.Element {
   const { visible, toggle } = useToggle(false);

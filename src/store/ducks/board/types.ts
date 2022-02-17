@@ -1,5 +1,6 @@
 export interface Board {
   columns: Record<string, Column>;
+  prayers: Record<string, Prayer>;
 }
 
 export interface Column {

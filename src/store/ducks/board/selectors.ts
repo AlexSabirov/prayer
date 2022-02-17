@@ -8,3 +8,6 @@ export const selectorColumns = createSelector(
   selectorSelf,
   (state) => state.boardSlice.columns,
 );
+
+export const selectorPrayers = () =>
+  createSelector(selectorSelf, (state) => state.boardSlice.prayers);

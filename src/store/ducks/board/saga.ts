@@ -3,12 +3,14 @@ import { call, put, takeLatest } from '@redux-saga/core/effects';
 import {
   createColumn,
   getColumns,
+  getPrayers,
   removeColumn,
   updateColumn,
 } from '../../../api/axios/axios';
 import {
   AddColumnsAction,
   GetColumnsAction,
+  GetPrayersAction,
   RemoveColumnAction,
   UpdateColumnAction,
 } from './actions';
@@ -50,6 +52,15 @@ export function* removeColumnWorker(action) {
   }
 }
 
+export function* getPrayersWorker() {
+  try {
+    const data = yield call(getPrayers);
+    yield put(boardActions.getPrayers(data));
+  } catch (e) {
+    yield console.log(e);
+  }
+}
+
 export function* getColumnsWatcher() {
   yield takeLatest(GetColumnsAction.type, getColumnsWorker);
 }
@@ -64,4 +75,8 @@ export function* updateColumnWatcher() {
 
 export function* removeColumnWatcher() {
   yield takeLatest(RemoveColumnAction.type, removeColumnWorker);
+}
+
+export function* getPrayersWatcher() {
+  yield takeLatest(GetPrayersAction.type, getPrayersWorker);
 }
