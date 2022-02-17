@@ -13,4 +13,5 @@ const InputWrapper = styled.TextInput`
   font-size: ${(props) => props.theme.fontSize.text};
   line-height: 20px;
   color: ${(props) => props.theme.colors.text};
+  margin: 5px 15px;
 `;

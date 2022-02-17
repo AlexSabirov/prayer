@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { normalize, schema } from 'normalizr';
 
+import { RemoveColumnBody } from '../../../api/axios/type';
 import { initialState } from './state';
 import { Column } from './types';
 
@@ -18,7 +19,6 @@ export const boardSlice = createSlice({
       const columnSchema = new schema.Entity('columns');
       const columnListSchema = new schema.Array(columnSchema);
       const normalizedData: Normalize = normalize(action.payload, columnListSchema);
-      console.log(`NData:`, normalizedData.entities);
       state.columns = normalizedData.entities.columns;
     },
     addColumn(state, action: PayloadAction<Column>) {
@@ -29,10 +29,10 @@ export const boardSlice = createSlice({
       const { id, ...rest } = action.payload;
       state.columns[id] = { id, ...rest };
     },
-    // removeColumn(state, action) {
-    //   const { columnId } = action.payload;
-    //   delete state.columns[columnId];
-    // },
+    removeColumn(state, action: PayloadAction<RemoveColumnBody>) {
+      const { id } = action.payload;
+      delete state.columns[id];
+    },
     // addPrayer(state, action) {
     //   const { columnId, title } = action.payload;
     //   state.columns[columnId].prayers[id] = { id, title, checked: false, comments: {} };

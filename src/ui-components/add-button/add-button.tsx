@@ -19,4 +19,5 @@ const ButtonsWrapper = styled.View`
   border-radius: 15px;
   width: 60%;
   align-self: center;
+  margin: 3px;
 `;

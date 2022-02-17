@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { store } from '../../store/store';
-import { CreateColumnBody, LoginBody, UpdateColumnBody } from './type';
+import { CreateColumnBody, LoginBody, RemoveColumnBody, UpdateColumnBody } from './type';
 
 export const instance = axios.create({
   baseURL: 'https://prayer.herokuapp.com/',
@@ -64,6 +64,15 @@ export const updateColumn = (data: UpdateColumnBody) => {
   return instanceToken
     .put(`/columns/${data.id}`, data)
     .then((respose) => respose.data)
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const removeColumn = (data: RemoveColumnBody) => {
+  return instanceToken
+    .delete(`/columns/${data.id}`)
+    .then((response) => response)
     .catch((error) => {
       console.log(error);
     });

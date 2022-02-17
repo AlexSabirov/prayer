@@ -13,3 +13,7 @@ export interface UpdateColumnBody {
   description: string;
   id: number;
 }
+
+export interface RemoveColumnBody {
+  id: number;
+}

@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { Button, Text } from 'react-native';
+import { Field, Form } from 'react-final-form';
+import { Button, Text, View } from 'react-native';
 import styled from 'styled-components';
 
 import { useAppDispatch } from '../../hooks/redux';
 import { useToggle } from '../../hooks/useToggle';
-import { UpdateColumnAction } from '../../store/ducks/board/actions';
+import { RemoveColumnAction, UpdateColumnAction } from '../../store/ducks/board/actions';
 import { Column } from '../../store/ducks/board/types';
+import { AddButton } from '../../ui-components/add-button';
 import { Input } from '../../ui-components/input';
 
 interface ColumnItemProps {
@@ -14,34 +15,64 @@ interface ColumnItemProps {
 
 export function ColumnItem({ column }: ColumnItemProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
   const { visible, toggle } = useToggle(false);
 
-  const updateColumn = () =>
-    dispatch(UpdateColumnAction({ title, description, id: column.id }));
+  const updateColumn = (values) => dispatch(UpdateColumnAction(values));
 
-  const updateColumnAndClose = () => {
-    updateColumn();
+  const updateColumnAndClose = (values) => {
+    updateColumn({ title: values.title, description: values.description, id: column.id });
     toggle();
+  };
+
+  const removeColumn = () => dispatch(RemoveColumnAction({ id: column.id }));
+
+  const initialValues = {
+    title: '',
+    description: '',
   };
 
   return (
     <ItemWrapper>
       {!visible ? (
-        <>
-          <Text>{column.title}</Text>
-          <Button title="edit" onPress={toggle} />
-        </>
+        <ColumnTitleWrapper>
+          <View>
+            <Text>{column.title}</Text>
+          </View>
+          <TitleButtonWrapper>
+            <View>
+              <Button title="Edit" onPress={toggle} />
+            </View>
+            <View>
+              <Button title="Del" onPress={removeColumn} />
+            </View>
+          </TitleButtonWrapper>
+        </ColumnTitleWrapper>
       ) : (
         <>
-          <Input placeholder="Имя колонки: " value={title} onChangeText={setTitle} />
-          <Input
-            placeholder="Описание: "
-            value={description}
-            onChangeText={setDescription}
+          <Form
+            onSubmit={updateColumnAndClose}
+            initialValues={initialValues}
+            render={({ handleSubmit }) => {
+              return (
+                <View>
+                  <Field
+                    name="title"
+                    render={(props) => (
+                      <Input {...props.input} placeholder="Имя колонки: " />
+                    )}
+                  />
+                  <Field
+                    name="description"
+                    render={(props) => (
+                      <Input {...props.input} placeholder="Описание: " />
+                    )}
+                  />
+                  <AddButton title="Изменить" onPress={handleSubmit} color="#bfb393" />
+                  <AddButton title="Отменить" onPress={toggle} color="#bfb393" />
+                </View>
+              );
+            }}
           />
-          <Button title="accept" onPress={updateColumnAndClose} />
         </>
       )}
     </ItemWrapper>
@@ -52,6 +83,18 @@ const ItemWrapper = styled.View`
   background-color: ${(props) => props.theme.colors.background};
   border: ${(props) => props.theme.colors.border};
   border-radius: 4px;
-  padding: 20px 15px;
+  padding: 15px;
   margin-bottom: 10px;
+`;
+
+const ColumnTitleWrapper = styled.View`
+  width: 100%;
+  position: relative;
+`;
+
+const TitleButtonWrapper = styled.View`
+  position: absolute;
+  top: -7px;
+  right: -15px;
+  flex-direction: row;
 `;
